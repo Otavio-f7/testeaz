@@ -3,32 +3,30 @@ import 'package:testeaz/data/service/episodes/episodes_service.dart';
 import 'package:testeaz/data/service/exceptions.dart';
 import 'package:testeaz/domain/episode_model.dart';
 
-class EpisodesController {
+class EpisodesController extends ChangeNotifier{
   final service = EpisodesService();
 
   // Loading
-  final ValueNotifier<bool> isLoading = ValueNotifier<bool>(false);
+  bool isLoading = false;
 
   // State 
-
-  final ValueNotifier<List<EpisodeModel>> state = 
-    ValueNotifier<List<EpisodeModel>>([]);
+  List<EpisodeModel> state = [];
 
   // Erro
-  final ValueNotifier<String> erro = ValueNotifier<String>('');
+  String erro = '';
 
   Future getEpisodes() async{
-    isLoading.value = true;
+    isLoading = true;
 
     try{
       final result = await service.getEpisodes();
-      state.value = result;
+      state = result;
     } on NotFoundException catch (e){
-      erro.value = e.message;
+      erro = e.message;
     } catch(e){
-      erro.value = e.toString();
+      erro = e.toString();
     }
 
-    isLoading.value = false;
+    isLoading = false;
   }
 }

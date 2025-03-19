@@ -14,11 +14,12 @@ class MyApp extends StatelessWidget {
   Widget build(BuildContext context) {
     final brightness = View.of(context).platformDispatcher.platformBrightness;
 
-    TextTheme textTheme = createTextTheme(context, "Roboto", "Bebas Neue");
-    MaterialTheme theme = MaterialTheme(textTheme);
     return MaterialApp(
       title: 'Flutter Demo',
-      theme:  theme.light(),
+      theme:  ThemeData(
+          colorScheme: ColorScheme.fromSeed(seedColor: Colors.teal,),
+          useMaterial3: true,
+      ),
       debugShowCheckedModeBanner: false,
       routes: {
         '/' : (context)=> const HomePage(),

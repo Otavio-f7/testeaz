@@ -1,23 +1,23 @@
 import 'package:flutter/material.dart';
 import 'package:testeaz/domain/episode_model.dart';
 
-class EpisodeCardList extends StatefulWidget {
-  const EpisodeCardList({super.key, required this.list});
+class LocationContentList extends StatefulWidget {
+  const LocationContentList({super.key, required this.list});
 
   final List<EpisodeModel> list;
 
   @override
-  State<EpisodeCardList> createState() => _EpisodeCardListState();
+  State<LocationContentList> createState() => _LocationContentListState();
 }
 
-class _EpisodeCardListState extends State<EpisodeCardList> {
+class _LocationContentListState extends State<LocationContentList> {
   @override
   Widget build(BuildContext context) {
     return ListView.builder(
-      itemCount: widget.list.length + 1,
+      itemCount: 11,
       scrollDirection: Axis.horizontal,
       itemBuilder: (ctx, i){
-        if(i == widget.list.length) {
+        if(i == 10) {
           return IconButton(
             icon: Icon(Icons.arrow_forward),
             onPressed: () {
@@ -26,11 +26,9 @@ class _EpisodeCardListState extends State<EpisodeCardList> {
           );
         } else {
           return Container(
-            decoration: BoxDecoration(
-              borderRadius: BorderRadius.circular(2.5)
-            ),
             height: 200,
             width: 150,
+            padding: EdgeInsets.symmetric(horizontal: 7.5),
             child: Stack(
               alignment: AlignmentDirectional.bottomCenter,
               children: [
@@ -38,7 +36,8 @@ class _EpisodeCardListState extends State<EpisodeCardList> {
                   borderRadius: BorderRadius.circular(15),
                   child: Image
                     .network(
-                    'https://m.media-amazon.com/images/I/81EBYGGN6QL._AC_UF1000,1000_QL80_.jpg'
+                    'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQqzuLs6Ic7_VRSrtiEx9C4_x4QhIaOMMw81Q&s',
+                    fit: BoxFit.fitWidth,
                   )
                 ),           
                 ClipRRect(
@@ -59,16 +58,8 @@ class _EpisodeCardListState extends State<EpisodeCardList> {
                       crossAxisAlignment: CrossAxisAlignment.center,
                       mainAxisAlignment: MainAxisAlignment.end,
                       children: [
-                        Text(
-                          widget.list[i].episode,
-                          style: TextStyle(fontSize: 11),
-                        ),
-                        Text(
-                          widget.list[i].name.length > 15
-                          ? '${widget.list[i].name.substring(0, 15)}...'
-                          : widget.list[i].name,
-                          style: TextStyle(fontSize: 13, fontWeight: FontWeight.bold),
-                        ),
+                        Text('Terra', style: TextStyle(fontSize: 12),),
+                        Text('Dimension C-$i', style: TextStyle(fontSize: 14, fontWeight: FontWeight.bold),),
                       ],
                     ),
                   ),

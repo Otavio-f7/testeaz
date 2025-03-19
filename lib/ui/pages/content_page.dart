@@ -1,7 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:testeaz/ui/controller/episodes_controller.dart';
+import 'package:testeaz/ui/widget/character_card_list.dart';
 import 'package:testeaz/ui/widget/episode_card_list.dart';
+import 'package:testeaz/ui/widget/location_content_list.dart';
 import 'package:testeaz/ui/widget/section_title.dart';
 
 class ContentPage extends StatefulWidget {
@@ -33,19 +35,36 @@ class _ContentPageState extends State<ContentPage> {
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
             SectionTitle(text: 'Episodios'),
-            SizedBox(
-              height: 200,
-              child: EpisodeCardList(list: List.empty(),),
+            FutureBuilder(
+              future: controller.getEpisodes(),
+              builder: (context, snapshot) {
+                if(snapshot.connectionState == ConnectionState.waiting){
+                  return const Center(child: CircularProgressIndicator());
+                }
+                if(snapshot.connectionState == ConnectionState.none){
+                  return Center(
+                    child: Text(controller.erro),
+                  );
+                }
+                if(snapshot.connectionState == ConnectionState.done && controller.state.isEmpty){
+                  return const Center(child: Text('Nenhum Item na Lista'),);
+                } else{
+                  return SizedBox(
+                    height: 200,
+                    child: EpisodeCardList(list: controller.state,),
+                  );
+                }
+              }
             ),
             SectionTitle(text: 'Personagens'),
             SizedBox(
-              height: 200,
-              child: EpisodeCardList(list: List.empty()),
+              height: 150,
+              child: CharacterCardList(list: List.empty()),
             ),
             SectionTitle(text: 'Lugares'),
             SizedBox(
-              height: 200,
-              child: EpisodeCardList(list: List.empty()),
+              height: 170,
+              child: LocationContentList(list: List.empty()),
             ),
           ],
         ),

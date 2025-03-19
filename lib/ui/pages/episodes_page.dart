@@ -27,23 +27,19 @@ class _EpisodesPageState extends State<EpisodesPage> {
         centerTitle: true,
         titleTextStyle: GoogleFonts.bebasNeue(fontSize: 40, color: Theme.of(context).colorScheme.primary),
       ),
-      body: AnimatedBuilder(
-        animation: Listenable.merge([
-          controller.isLoading,
-          controller.erro,
-          controller.state,
-        ]),
-        builder: (context, child) {
+      body: FutureBuilder(
+        future: controller.getEpisodes(),
+        builder: (context, snapshot) {
           
-          if(controller.isLoading.value){
+          if(snapshot.connectionState == ConnectionState.waiting){
             return const Center(child: CircularProgressIndicator());
           }
-          if(controller.erro.value.isNotEmpty){
+          if(snapshot.connectionState == ConnectionState.none){
             return Center(
-              child: Text(controller.erro.value),
+              child: Text(controller.erro),
             );
           }
-          if(controller.state.value.isEmpty){
+          if(snapshot.connectionState == ConnectionState.done && controller.state.isEmpty){
             return const Center(child: Text('Nenhum Item na Lista'),);
           } else {
             return Column(
@@ -62,7 +58,7 @@ class _EpisodesPageState extends State<EpisodesPage> {
                   ),
                 ),
                 Expanded(
-                  child: Text('a'),  
+                  child: Text('${controller.state[0].name}'),  
                 ),
               ],
             );

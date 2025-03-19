@@ -1,23 +1,23 @@
 import 'package:flutter/material.dart';
-import 'package:testeaz/domain/episode_model.dart';
+import 'package:testeaz/domain/character_model.dart';
 
-class EpisodeCardList extends StatefulWidget {
-  const EpisodeCardList({super.key, required this.list});
+class CharacterCardList extends StatefulWidget {
+  const CharacterCardList({super.key, required this.list});
 
-  final List<EpisodeModel> list;
+  final List<CharacterModel> list;
 
   @override
-  State<EpisodeCardList> createState() => _EpisodeCardListState();
+  State<CharacterCardList> createState() => _CharacterCardListState();
 }
 
-class _EpisodeCardListState extends State<EpisodeCardList> {
+class _CharacterCardListState extends State<CharacterCardList> {
   @override
   Widget build(BuildContext context) {
     return ListView.builder(
-      itemCount: widget.list.length + 1,
+      itemCount: 11,
       scrollDirection: Axis.horizontal,
       itemBuilder: (ctx, i){
-        if(i == widget.list.length) {
+        if(i == 10) {
           return IconButton(
             icon: Icon(Icons.arrow_forward),
             onPressed: () {
@@ -27,9 +27,10 @@ class _EpisodeCardListState extends State<EpisodeCardList> {
         } else {
           return Container(
             decoration: BoxDecoration(
-              borderRadius: BorderRadius.circular(2.5)
+              borderRadius: BorderRadius.circular(25)
             ),
-            height: 200,
+            padding: EdgeInsets.all(7.5),
+            height: 165,
             width: 150,
             child: Stack(
               alignment: AlignmentDirectional.bottomCenter,
@@ -38,37 +39,28 @@ class _EpisodeCardListState extends State<EpisodeCardList> {
                   borderRadius: BorderRadius.circular(15),
                   child: Image
                     .network(
-                    'https://m.media-amazon.com/images/I/81EBYGGN6QL._AC_UF1000,1000_QL80_.jpg'
+                    'https://rickandmortyapi.com/api/character/avatar/${i+1}.jpeg'
                   )
                 ),           
                 ClipRRect(
                   borderRadius: BorderRadius.circular(15),
                   child: Container(
-                    height: 200,
+                    height: 150,
                     width: 135,
-                    // padding: EdgeInsets.symmetric(horizontal: 10),
+                    padding: EdgeInsets.symmetric(horizontal: 5),
                     decoration: BoxDecoration(
                       gradient: LinearGradient(
                         begin: Alignment.topCenter,
                         end: Alignment.bottomCenter,
                         colors: [Colors.transparent, Colors.greenAccent.shade100,],
-                        stops: [0.01, 0.85],
+                        stops: [0.01, 0.89],
                       ),
                     ),
                     child: Column(
                       crossAxisAlignment: CrossAxisAlignment.center,
                       mainAxisAlignment: MainAxisAlignment.end,
                       children: [
-                        Text(
-                          widget.list[i].episode,
-                          style: TextStyle(fontSize: 11),
-                        ),
-                        Text(
-                          widget.list[i].name.length > 15
-                          ? '${widget.list[i].name.substring(0, 15)}...'
-                          : widget.list[i].name,
-                          style: TextStyle(fontSize: 13, fontWeight: FontWeight.bold),
-                        ),
+                        Text('Personagem', style: TextStyle(fontSize: 14, fontWeight: FontWeight.bold),),
                       ],
                     ),
                   ),
